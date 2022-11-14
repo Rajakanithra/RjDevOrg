@@ -1,0 +1,39 @@
+<template>
+<lightning-card>
+    <h3 slot="title">
+        <lightning-icon icon-name="utility:add" size="small"></lightning-icon>&nbsp;&nbsp;
+        Student Result Form
+    </h3>
+    <div slot="footer">
+        <lightning-button variant="brand" onclick = {createRecord} label="Submit" title="Submit" icon-name="utility:save" class="slds-m-left_x-small"></lightning-button>
+    </div>
+    
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input type="text" value = {rec.Name} label="Name" max-length = 30  required = true onchange={handleInputChange} onfocus={handleInputFocus} onblur={handleInputBlur}></lightning-input>
+    </div>
+
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input type="text" value = {rec.FatherName__c} label="Father Name" max-length = 30 required = true onchange={handleInputChange} onfocus={handleInputFocus} onblur={handleInputBlur}></lightning-input>
+    </div>
+
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input type="Number" value = {rec.Language__c} max-length = 3 pattern = "\b(0*(?:[1-9][0-9]?|100))\b" onchange={handleInputChange} message-when-pattern-mismatch = "Mark Should Not Exceed 100" required = true label="Language Mark"  onfocus={handleInputFocus} onblur={handleInputBlur}></lightning-input>
+    </div>
+
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input type="Number" value = {rec.English__c} max-length = 3 pattern = "\b(0*(?:[1-9][0-9]?|100))\b" onchange={handleInputChange} message-when-pattern-mismatch = "Mark Should Not Exceed 100" required = true label="English Mark"  onfocus={handleInputFocus} onblur={handleInputBlur}></lightning-input>
+    </div>
+
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input type="Number" value = {rec.Maths__c} max-length = 3 pattern = "\b(0*(?:[1-9][0-9]?|100))\b" onchange={handleInputChange} message-when-pattern-mismatch = "Mark Should Not Exceed 100" required = true label="Maths Mark"  onfocus={handleInputFocus} onblur={handleInputBlur}></lightning-input>
+    </div>
+
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input type="Number" value = {rec.Science__c} max-length = 3 pattern = "\b(0*(?:[1-9][0-9]?|100))\b" onchange={handleInputChange} message-when-pattern-mismatch = "Mark Should Not Exceed 100" required = true label="Science Mark"  onfocus={handleInputFocus} onblur={handleInputBlur}></lightning-input>
+    </div>
+
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input type="Number" value = {rec.Social_Science__c} max-length = 3 pattern = "\b(0*(?:[1-9][0-9]?|100))\b" onchange={handleInputChange} message-when-pattern-mismatch = "Mark Should Not Exceed 100" required = true label="Social Science Mark"  onfocus={handleInputFocus} onblur={handleInputBlur}></lightning-input>
+    </div>
+</lightning-card>
+</template>

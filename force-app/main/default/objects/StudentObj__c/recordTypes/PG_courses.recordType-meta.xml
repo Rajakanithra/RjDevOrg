@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PG_courses</fullName>
+    <active>true</active>
+    <label>PG courses</label>
+    <picklistValues>
+        <picklist>Department__c</picklist>
+        <values>
+            <fullName>mba</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>mca</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

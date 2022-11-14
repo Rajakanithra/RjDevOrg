@@ -1,0 +1,72 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" controller="contactCreateclass" >
+	<aura:attribute name="contobj" type="Contact" default="{'sObjectType':'Contact',
+                                                           'FirstName':'',
+                                                           'LastName':'',
+                                                           'Phone':''}"/>
+    <aura:attribute name="contid" type="string"/>
+    <aura:attribute name="contactList" type="Contact[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.showContacts}"/>
+   <article class="slds-card">
+  <div class="slds-card__header slds-grid">
+    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+      <div class="slds-media__figure">
+        <span class="slds-icon_container slds-icon-standard-account" title="contact">
+        <lightning:icon iconName="standard:contact" alternativeText="contact" title="contact" />
+        </span>
+      </div>
+      <div class="slds-media__body">
+        <h2 class="slds-card__header-title">
+          <a href="#" class="slds-card__header-link slds-truncate" title="Contacts">
+            <span>Contacts</span>
+          </a>
+        </h2>
+      </div>
+      <div class="slds-no-flex">
+        <lightning:button  variant="brand" title="save" label="save" onclick="{!c.dosave}"/>
+      </div>
+    </header>
+  </div>
+  <div class="slds-card__body slds-card__body_inner">Please Enter the contacts Details</div>
+  <footer class="slds-card__footer">
+    
+      <span class="slds-assistive-text">Contacts</span>
+    </footer>
+
+    <Lightning:input  value="{!v.contobj.FirstName}" label="FirstName" placeholder="Enter the first name Here.."/>
+    <Lightning:input  value="{!v.contobj.LastName}" label="LastName" placeholder="Enter the Last name Here.."/>
+    <Lightning:input  value="{!v.contobj.Phone}" label="phone" placeholder="Enter the phone numberHere.."/><br></br>
+    
+    <div>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+  <thead>
+    <tr class="slds-line-height_reset">
+      <th class="" scope="col">
+        <div class="slds-truncate" title="FirstName">First Name</div>
+      </th>
+      <th class="" scope="col">
+        <div class="slds-truncate" title="LastName">Last Name</div>
+      </th>
+      <th class="" scope="col">
+        <div class="slds-truncate" title="Phone">Phone</div>
+      </th>
+    </tr>
+  </thead>
+        <tbody>
+        <aura:iteration items="{!v.contactList}" var="contobj" indexVar="index">
+         <tr>
+                    <td data-label="First Name">
+                        <div class="slds-truncate" title="First Name">{!contobj.FirstName}</div>
+                    </td>
+                    <td data-label="Last Name">
+                        <div class="slds-truncate" title="Last Name">{!contobj.LastName}</div>
+                    </td>
+             		<td data-label="Phone">
+                        <div class="slds-truncate" title="Phone">{!contobj.Phone}</div>
+                    </td>
+                </tr>
+        </aura:iteration>
+        </tbody>
+    </table>
+    </div>  
+       </article>
+</aura:component>

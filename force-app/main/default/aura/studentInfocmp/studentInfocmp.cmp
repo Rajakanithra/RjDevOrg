@@ -1,0 +1,89 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global"  controller="studentInfoHandler" >
+	<aura:attribute name="stuobj" type="Student__c" default="{'sobjectType':'Student__c',
+                                                             'Name':'',
+                                                             'FatherName__c':'',
+                                                             'MotherName__c':'',
+                                                             'PhoneNumber__c':'',
+                                                             'Department__c':''}"/>
+    <aura:attribute name="studentlist" type="Student__c[]"/>
+    <aura:attribute name="deptValues" type="String" />
+    <aura:attribute name="shoeValues" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.showstudentlist}"/>
+    <div class="slds-m-around--xx-large">
+    <div class="container-fluid">
+    <div class="form-group">
+    <lightning:input value="{!v.stuobj.Name}" label="Student Name" placeholder="Enter the student Name Here.."/>
+        </div>
+        <div class="form-group">
+    <lightning:input value="{!v.stuobj.FatherName__c}" label="Father Name" placeholder="Enter the Father Name Here.."/>
+        </div>
+        <div class="form-group">
+    <lightning:input value="{!v.stuobj.MotherName__c}" label="Mother Name" placeholder="Enter the Mother Name Here.."/>
+        </div>
+        <div class="form-group">
+    <lightning:input value="{!v.stuobj.PhoneNumber__c}" label="Phone Number" placeholder="Enter the Phone Number Here.."/>
+        </div>
+        <br></br>
+        <div class="form-group">
+    <lightning:select class="slds-select" label="Select the Department" value="{!v.stuobj.Department__c}">
+        <aura:iteration items="{!v.deptValues}" var="option">
+                        <option text="{!option.label}" value="{!option.value}"/>
+        </aura:iteration>
+    </lightning:select>
+        </div>
+    <br></br>
+    <br></br>
+        <div class="form-group">
+    <lightning:select class="slds-select" label="Select the Shoe Style" value="{!v.stuobj.Shoe_Design__c}">
+        <aura:iteration items="{!v.shoeValues}" var="option">
+                        <option text="{!option.label}" value="{!option.value}"/>
+        </aura:iteration>
+    </lightning:select>
+        </div>
+    <br></br>
+<br></br>
+    <lightning:button variant="brand" title="save" label="save" onclick="{!c.dosave}"/>
+        <br></br>
+        <br></br>
+    <div>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+  <thead>
+    <tr class="slds-line-height_reset">
+      <th class="" scope="col">
+        <div class="slds-truncate" title="Name">Name</div>
+      </th>
+      <th class="" scope="col">
+        <div class="slds-truncate" title="FatherName">Father Name</div>
+      </th>
+      <th class="" scope="col">
+        <div class="slds-truncate" title="MothereName">Mother Name</div>
+      </th>
+      <th class="" scope="col">
+        <div class="slds-truncate" title="PhoneNumber">Phone Number</div>
+      </th>
+    </tr>
+  </thead>
+        <tbody>
+        <aura:iteration items="{!v.studentlist}" var="stuobj" indexVar="index">
+         <tr>
+                    <td data-label="Name">
+                        <div class="slds-truncate" title="Student Name">{!stuobj.Name}</div>
+                    </td>
+                    <td data-label="Father Name">
+                        <div class="slds-truncate" title="Father Name">{!stuobj.FatherName__c}</div>
+                    </td>
+            		<td data-label="Mother Name">
+                        <div class="slds-truncate" title="Mother Name">{!stuobj.MotherName__c}</div>
+                    </td>
+             		<td data-label="Phone Number">
+                        <div class="slds-truncate" title="Phone Number">{!stuobj.PhoneNumber__c}</div>
+                    </td>
+                </tr>
+        </aura:iteration>
+        </tbody>
+ </table>
+ </div>
+        </div>
+    </div>
+</aura:component>

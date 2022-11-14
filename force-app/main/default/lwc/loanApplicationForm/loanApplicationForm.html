@@ -1,0 +1,219 @@
+<template>
+   <lightning-card>
+      <div class="slds-grid slds-gutters">
+         <div class="slds-col">
+            <span style="padding-left: 8px">
+            <b><label class="slds-text-heading_medium">
+            Welcome to XXXX Bank</label></b>
+            </span>
+         </div>
+      </div>
+      </br>
+      <div class="slds-grid slds-gutters">
+         <div class="slds-col">
+            <span style="padding-left: 8px">
+               <lightning-avatar
+                  size="Large"
+                  variant="circle"
+                  src="https://www.lightningdesignsystem.com/assets/images/avatar2.jpg"
+                  ></lightning-avatar>
+            </span>
+         </div>
+         <div class="slds-col">
+            <span>
+               <lightning-formatted-text
+                  style="text-align: right"
+                  value=" XXXX Bank Limited is an Indian multinational public sector bank and financial services statutory body headquartered in Mumbai, Maharashtra. XXXX is the 43rd largest bank in the world and ranked  221st in the Fortune Global 500 list of the world's biggest corporations of 2020, being the only Indian bank on the list."
+                  ></lightning-formatted-text>
+            </span>
+         </div>
+      </div>
+      <lightning-accordion class="example-accordion"
+         active-section-name="Days">
+         <lightning-accordion-section name="Calculator" label="Calculator">
+            <fieldset class="slds-form-element">
+               <div class="slds-form-element__control slds-p-around_medium" style="padding-left: 40px">
+                  <lightning-button variant="brand" onclick={emiClac} label="EMI Calculator" title="EMI Calculator" class="slds-m-left_x-medium"></lightning-button>
+                  </br> </br>
+                  <lightning-button variant="brand" onclick={eligiClac} label="Eligibility Calculator" title="Eligibility Calculator" class="slds-m-left_x-medium"></lightning-button>
+               </div>
+            </fieldset>
+         </lightning-accordion-section>
+         <lightning-accordion-section name="ApplyLoan" label="Apply Loan">
+            <fieldset class="slds-form-element">
+               <div class="slds-form-element__control slds-p-around_medium" style="padding-left: 40px">
+                  <lightning-button variant="brand" onclick={perLoan} label="Personal Loan" title="Personal Loan" class="slds-m-left_x-medium"></lightning-button>
+                  </br> </br>
+                  <lightning-button variant="brand" onclick={vehLoan} label="Vehicle Loan" title="Vehicle Loan" class="slds-m-left_x-medium"></lightning-button>
+                  </br> </br>
+                  <lightning-button variant="brand" onclick={eduLoan} label="Education Loan" title="Education Loan" class="slds-m-left_x-medium"></lightning-button>
+                  </br> </br>
+                  <lightning-button variant="brand" onclick={hmeLoan} label="Home Loan" title="Home Loan" class="slds-m-left_x-medium"></lightning-button>
+               </div>
+            </fieldset>
+         </lightning-accordion-section>
+      </lightning-accordion>
+   </lightning-card>
+   <!--Use template if:true to display/hide popup based on isModalOpen value--> 
+   <template if:true={isModalOpen}>
+      <!-- Modal/Popup Box LWC starts here -->
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+         <div class="slds-modal__container">
+            <!-- Modal/Popup Box LWC header here -->
+            <header class="slds-modal__header">
+               <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                  <lightning-icon icon-name="utility:close"
+                     alternative-text="close"
+                     variant="inverse"
+                     size="small" ></lightning-icon>
+                  <span class="slds-assistive-text">Close</span>
+               </button>
+               <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">You have Selected {loanType} </h2>
+               <br/>
+               <!---Progress Indicator-->
+               <lightning-progress-indicator current-step= {currStep}  type="path" variant="base">
+                  <lightning-progress-step label="Personal Information" onstepfocus = {selectStep1} value="1"></lightning-progress-step>
+                  <lightning-progress-step label="Work Information" onstepfocus = {selectStep2} value="2"></lightning-progress-step>
+                  <lightning-progress-step label="Asset Information" onstepfocus = {selectStep3} value="3"></lightning-progress-step>
+                  <lightning-progress-step label="Required Documents"  onstepfocus = {selectStep4} value="4"></lightning-progress-step>
+               </lightning-progress-indicator>
+            </header>
+            <div class="modalBody">
+               <template if:true = {isLoaded}>
+                  <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+               </template>
+               <!-- Modal/Popup Box LWC body starts here -->
+               <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                  <!--Personal Information-->
+                  <template if:true= {isPersonalInfo}>
+                  <div class="slds-grid slds-gutters">
+                     <div class="slds-col">
+                        <div class="slds-form-element">
+                           <label class="slds-form-element__label"  for="form-element-01">Name</label>
+                           <div class="slds-form-element__control">
+                             <input type="text" id="form-element-01" value = {PerLoan.Name} onchange = {handleChange} placeholder="Enter Your Name…" class="slds-input" />
+                           </div>
+                        </div>
+                        <div class="slds-form-element">
+                           <label class="slds-form-element__label" for="form-element-02">Father Name</label>
+                           <div class="slds-form-element__control">
+                              <input type="text" id="form-element-02"  value = {PerLoan.fatherName} onchange = {handleChange}  placeholder="Enter Your Father Name…" class="slds-input" />
+                           </div>
+                        </div>
+                        <div class="slds-form-element">
+                           <label class="slds-form-element__label" for="form-element-03">Mother Name</label>
+                           <div class="slds-form-element__control">
+                              <input type="text" id="form-element-03" value = {PerLoan.motherName} onchange = {handleChange} placeholder="Enter Your Mother Name…" class="slds-input" />
+                           </div>
+                        </div>
+                        <div class="slds-form-element">
+                           <label class="slds-form-element__label" for="form-element-04">Contact Number</label>
+                           <div class="slds-form-element__control">
+                              <input type="tel" id="form-element-04" value = {PerLoan.contactNum} onchange = {handleChange} placeholder="Enter Your Contact Num" class="slds-input" />
+                           </div>
+                        </div>
+                     </div>
+                     <div class="slds-col">
+                        <div class="slds-form-element">
+                           <label class="slds-form-element__label" for="form-element-05">Age</label>
+                           <div class="slds-form-element__control">
+                              <input type="Number"  id="form-element-05" value = {PerLoan.Age} onchange = {handleChange} placeholder="Enter Your Age" class="slds-input" />
+                           </div>
+                        </div>
+                        <div class="slds-form-element">
+                           <label class="slds-form-element__label" for="form-element-06">DOB</label>
+                           <div class="slds-form-element__control">
+                              <input type="Date" id="form-element-06" value = {PerLoan.DateOfBirth} onchange = {handleChange}  placeholder="Enter Your DOB" class="slds-input" />
+                           </div>
+                        </div>
+                        <div class="slds-form-element">
+                           <label class="slds-form-element__label" for="form-element-07">Place</label>
+                           <div class="slds-form-element__control">
+                              <input type="Text" id="form-element-07" value = {PerLoan.Place} onchange = {handleChange} placeholder="Enter Your City" class="slds-input" />
+                           </div>
+                        </div>
+                        <div class="slds-form-element">
+                           <label class="slds-form-element__label" for="form-element-08">Email</label>
+                           <div class="slds-form-element__control">
+                              <input type="Email" id="form-element-08" value = {PerLoan.email} onchange = {handleChange} placeholder="Enter Your Email" class="slds-input" />
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </template>
+                  <!--Personal Information End-->
+                  <!--Work Information-->
+                  <template if:true={isWorkInfo}>
+                  <div class="slds-grid slds-gutters">
+                     <div class="slds-col">
+                        <div class="slds-form-element">
+                           <label class="slds-form-element__label" for="form-element-09">Company Name</label>
+                           <div class="slds-form-element__control">
+                              <input type="text" id="form-element-09" onchange = {handleChange} value = {PerLoan.companyName} placeholder="Enter Your Company Name…" class="slds-input" />
+                           </div>
+                        </div>
+                        <div class="slds-form-element">
+                           <label class="slds-form-element__label" for="form-element-10">Total Work Experience</label>
+                           <div class="slds-form-element__control">
+                              <input type="Number" id="form-element-10" onchange = {handleChange} value =  {PerLoan.totWorkExp} placeholder="Provide your total work exp…" class="slds-input" />
+                           </div>
+                        </div>
+                        <div class="slds-form-element">
+                           <label class="slds-form-element__label" for="form-element-11">Office Location</label>
+                           <div class="slds-form-element__control">
+                              <input type="text" id="form-element-11" onchange = {handleChange} value = {PerLoan.officeLoc} placeholder="Provide you office location…" class="slds-input" />
+                           </div>
+                        </div>
+                     </div>
+                     <div class="slds-col">
+                        <div class="slds-form-element">
+                           <label class="slds-form-element__label" for="select-01">Employment Type</label>
+                           <div class="slds-form-element__control">
+                             <div class="slds-select_container">
+                               <select onchange = {handleChange} class="slds-select" id="select-01">
+                                 <option value= {PerLoan.empType} >  {PerLoan.empType} </option>
+                                 <option>Full Time</option>
+                                 <option>Part Time</option>
+                                 <option>Contractor</option>
+                               </select>
+                             </div>
+                           </div>
+                         </div>
+                         <div class="slds-form-element">
+                           <label class="slds-form-element__label" for="select-02">Job Sector</label>
+                           <div class="slds-form-element__control">
+                             <div class="slds-select_container">
+                               <select  onchange = {handleChange} class="slds-select" id="select-02">
+                                 <option value= {PerLoan.jobSec} > {PerLoan.jobSec} </option>
+                                 <option>Government</option>
+                                 <option>Private</option>
+                                 <option>Business</option>
+                               </select>
+                             </div>
+                           </div>
+                         </div>
+                        <div class="slds-form-element">
+                           <label class="slds-form-element__label" for="form-element-12">Current CTC</label>
+                           <div class="slds-form-element__control">
+                              <input type="Text" onchange = {handleChange} value = {PerLoan.currCtc} id="form-element-12" placeholder="Enter Your CTC" class="slds-input" />
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  </template>
+                  <!--Work Information End-->
+               </div>
+            </div>
+            <!-- Modal/Popup Box LWC footer starts here -->
+            <footer class="slds-modal__footer">
+               <button class="slds-button slds-button_brand" onclick= {prevPage} title= "Previous" >Previous</button>
+               <button class="slds-button slds-button_brand" onclick= {nextPage} title= "Next" >Next</button>
+               <template if:true={isWorkInfo}>
+                  <button class="slds-button slds-button_brand" onclick= {createRecord} title= "Submit" >Submit</button>
+               </template>
+            </footer>
+         </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+   </template>
+</template>
